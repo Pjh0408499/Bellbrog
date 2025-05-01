@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Detail</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body { margin: 0; font-family: 'Helvetica Neue', sans-serif; background: #fff; color: #111; transition: background 0.3s, color 0.3s; line-height: 1.6; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: #fff; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 1000; }
+    header h1 { margin: 0; font-size: 1.4em; }
+    nav a { margin-left: 20px; text-decoration: none; color: inherit; font-weight: 500; }
+    main { padding: 60px 40px; max-width: 800px; margin: auto; }
+    h2 { font-size: 2em; margin-bottom: 20px; }
+    p { margin-bottom: 20px; }
+    img { max-width: 100%; border-radius: 10px; margin: 20px 0; }
+    footer { text-align: center; padding: 30px 20px; font-size: 0.9em; background-color: #f2f2f2; color: #666; margin-top: 60px; }
+    .toggle-dark { position: fixed; bottom: 20px; right: 20px; padding: 10px; background: #111; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .dark-mode { background: #111; color: #eee; }
+    .dark-mode header { background: #111; border-color: #444; }
+    .dark-mode footer { background: #222; color: #aaa; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Portfolio</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="subjects.html">Subjects</a>
+      <a href="posts.html">Posts</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main data-aos="fade-up">
+    <h2 id="title"></h2>
+    <img id="image" src="" alt="" />
+    <div id="content"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Jonghyeong Park. All rights reserved.</p>
+  </footer>
+
+  <button class="toggle-dark" onclick="toggleDarkMode()">🌓 Toggle Dark Mode</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    function toggleDarkMode() {
+      const isDark = document.body.classList.toggle('dark-mode');
+      localStorage.setItem('dark-mode', isDark);
+    }
+    window.onload = function () {
+      if (localStorage.getItem('dark-mode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+    };
+
+    const data = {
+      protein_ai: {
+        title: "Protein Identification using AI",
+        image: "images/protein_ai.png",
+        paragraphs: [
+          "AI를 활용한 단백질 구조 예측 및 분류는 생물학적 발견의 속도를 높이고 있습니다.",
+          "신경망 기반의 분석은 유전자 및 단백질 데이터를 바탕으로 기존 접근 방식보다 더 정확한 통찰을 제공합니다.",
+          "이 기술은 질병 이해, 신약 설계, 생물학적 메커니즘 규명 등 다양한 분야에 활용됩니다."
+        ]
+      },
+      drug_bigdata: {
+        title: "Drug Development with Big Data",
+        image: "images/drug_bigdata.png",
+        paragraphs: [
+          "빅데이터 분석은 신약 개발 과정의 비용을 절감하고 성공 가능성을 높입니다.",
+          "임상시험 데이터를 포함한 방대한 바이오 데이터를 분석해 최적의 후보 물질을 도출할 수 있습니다.",
+          "이는 정밀 의료와 개인 맞춤형 치료의 기반이 됩니다."
+        ]
+      },
+      molecular_docking: {
+        title: "AI-driven Molecular Docking",
+        image: "images/molecular_docking.png",
+        paragraphs: [
+          "분자동역학과 AI를 결합하여 리간드-표적 상호작용을 정밀하게 예측할 수 있습니다.",
+          "기존의 실험 기반 접근을 보완하거나 대체할 수 있는 강력한 도구입니다.",
+          "신약 후보의 결합 친화도 평가에 필수적인 기술로 자리잡고 있습니다."
+        ]
+      },
+      predictive_toxicology: {
+        title: "Predictive Toxicology using ML",
+        image: "images/predictive_toxicology.png",
+        paragraphs: [
+          "기계학습을 활용한 독성 예측은 약물 안전성 평가에 혁신을 가져왔습니다.",
+          "화합물의 구조 및 특성을 기반으로 독성을 사전에 평가할 수 있습니다.",
+          "이는 동물 실험을 줄이고 개발 초기 단계에서 위험성을 걸러내는 데 유리합니다."
+        ]
+      }
+    };
+
+    const params = new URLSearchParams(location.search);
+    const topic = params.get("topic");
+
+    if (topic && data[topic]) {
+      document.getElementById("title").textContent = data[topic].title;
+      document.getElementById("image").src = data[topic].image;
+      document.getElementById("image").alt = data[topic].title;
+      const content = document.getElementById("content");
+      data[topic].paragraphs.forEach(p => {
+        const para = document.createElement("p");
+        para.textContent = p;
+        content.appendChild(para);
+      });
+    } else {
+      document.getElementById("title").textContent = "Subject not found";
+    }
+  </script>
+</body>
+</html>
